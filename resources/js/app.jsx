@@ -1,6 +1,13 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
+import '../css/app.css';
+import { createInertiaApp } from '@inertiajs/react'
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
+import './bootstrap'
 
-const App = () => <h1>Hello from React!</h1>;
-
-ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+createInertiaApp({
+  resolve: (name) =>
+    resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+  setup({ el, App, props }) {
+    ReactDOM.createRoot(el).render(<App {...props} />)
+  },
+})
